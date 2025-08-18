@@ -1,4 +1,4 @@
-// Nota: La conexión a la API/DB se maneja en components/auth/login-form.tsx (función `authenticate`).
+//La conexión a la API/DB se maneja en components/auth/login-form.tsx (función `authenticate`).
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
