@@ -14,7 +14,7 @@ const DEMO_USER = {
 const AUTH_STORAGE_KEY = "demo-auth"
 
 // === SOURCE: conexión a API/DB ===
-// En producción, mueve esto a: /lib/api/auth.ts y usa variables de entorno.
+// En producción, se debe mover esto a /lib/api/auth.ts y se debe usar variables de entorno.
 // Ej.: process.env.NEXT_PUBLIC_API_URL configurada en .env.local
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
