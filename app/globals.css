@@ -98,3 +98,9 @@
 .status-inactive {
   @apply bg-gray-100 text-gray-800;
 }
+
+html.no-shell .app-sidebar,
+html.no-shell .app-mobile-header,
+html.no-shell .app-support {
+  display: none !important;
+}

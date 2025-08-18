@@ -22,14 +22,23 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <div className="flex h-screen bg-gray-50">
-          <Sidebar />
+        <div className="flex h-screen bg-gray-50 app-shell">
+          {/* Sidebar visible solo fuera de 'no-shell' */}
+          <div className="app-sidebar">
+            <Sidebar />
+          </div>
           <div className="flex-1 flex flex-col overflow-hidden">
-            <MobileHeader />
+            {/* Header móvil visible solo fuera de 'no-shell' */}
+            <div className="app-mobile-header">
+              <MobileHeader />
+            </div>
             <main className="flex-1 overflow-auto">{children}</main>
           </div>
         </div>
-        <SupportChat />
+        {/* Chat soporte visible solo fuera de 'no-shell' */}
+        <div className="app-support">
+          <SupportChat />
+        </div>
       </body>
     </html>
   )

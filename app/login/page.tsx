@@ -19,6 +19,14 @@ export default function LoginPage() {
     }
   }, [router])
 
+  // Habilita "no-shell" para ocultar Sidebar/Header/Chat en /login
+  useEffect(() => {
+    document.documentElement.classList.add("no-shell")
+    return () => {
+      document.documentElement.classList.remove("no-shell")
+    }
+  }, [])
+
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <Card className="w-full max-w-md border">
