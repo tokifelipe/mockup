@@ -1,3 +1,4 @@
+//Exporta un componente de React y es necesario para que su ruta sea accesible. Es decir es la pagina de inicio asociada a dicha ruta.
 "use client"
 
 import Link from "next/link"
