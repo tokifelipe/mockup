@@ -1,0 +1,147 @@
+.
+├── app
+│   ├── admin
+│   │   └── login
+│   │       └── page.tsx
+│   ├── agents
+│   │   ├── [id]
+│   │   │   └── page.tsx
+│   │   ├── loading.tsx
+│   │   └── page.tsx
+│   ├── api
+│   │   └── data.ts
+│   ├── dashboard
+│   │   ├── agents
+│   │   │   └── page.tsx
+│   │   ├── announcements
+│   │   │   └── page.tsx
+│   │   ├── chat_config
+│   │   │   └── page.tsx
+│   │   ├── datasources
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── hierarchy
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   ├── lib
+│   │   ├── definitions.ts
+│   │   └── utils.ts
+│   ├── loading.tsx
+│   ├── login
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── page.tsx
+│   └── ui
+│       ├── fonts.ts
+│       └── globals.css
+├── components
+│   ├── agent-form.tsx
+│   ├── agent-hierarchy.tsx
+│   ├── agent-selector.tsx
+│   ├── agents-list.tsx
+│   ├── agent-stats.tsx
+│   ├── auth
+│   │   └── login-form.tsx
+│   ├── chat-appearance-tab.tsx
+│   ├── chat-behavior-tab.tsx
+│   ├── chat-code-tab.tsx
+│   ├── chat-config-form.tsx
+│   ├── chat-config-list.tsx
+│   ├── chat-info-tab.tsx
+│   ├── chat-messages-tab.tsx
+│   ├── chat-preview.tsx
+│   ├── comunicado-form.tsx
+│   ├── data-source-form.tsx
+│   ├── data-source-selector.tsx
+│   ├── data-sources-list.tsx
+│   ├── date-picker.tsx
+│   ├── mobile-header.tsx
+│   ├── mobile-sidebar.tsx
+│   ├── segment-selector.tsx
+│   ├── sidebar.tsx
+│   ├── support-chat.tsx
+│   ├── theme-provider.tsx
+│   ├── time-picker.tsx
+│   └── ui
+│       ├── accordion.tsx
+│       ├── alert-dialog.tsx
+│       ├── alert.tsx
+│       ├── aspect-ratio.tsx
+│       ├── avatar.tsx
+│       ├── badge.tsx
+│       ├── breadcrumb.tsx
+│       ├── button.tsx
+│       ├── calendar.tsx
+│       ├── card.tsx
+│       ├── carousel.tsx
+│       ├── chart.tsx
+│       ├── checkbox.tsx
+│       ├── collapsible.tsx
+│       ├── command.tsx
+│       ├── context-menu.tsx
+│       ├── dialog.tsx
+│       ├── drawer.tsx
+│       ├── dropdown-menu.tsx
+│       ├── form.tsx
+│       ├── hover-card.tsx
+│       ├── input-otp.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── menubar.tsx
+│       ├── navigation-menu.tsx
+│       ├── pagination.tsx
+│       ├── popover.tsx
+│       ├── progress.tsx
+│       ├── radio-group.tsx
+│       ├── resizable.tsx
+│       ├── scroll-area.tsx
+│       ├── select.tsx
+│       ├── separator.tsx
+│       ├── sheet.tsx
+│       ├── sidebar.tsx
+│       ├── skeleton.tsx
+│       ├── slider.tsx
+│       ├── sonner.tsx
+│       ├── switch.tsx
+│       ├── table.tsx
+│       ├── tabs.tsx
+│       ├── textarea.tsx
+│       ├── toaster.tsx
+│       ├── toast.tsx
+│       ├── toggle-group.tsx
+│       ├── toggle.tsx
+│       ├── tooltip.tsx
+│       ├── use-mobile.tsx
+│       └── use-toast.ts
+├── components.json
+├── estructura.txt
+├── .gitignore
+├── hooks
+│   ├── use-mobile.tsx
+│   └── use-toast.ts
+├── index.js
+├── lib
+│   └── auth
+├── next.config.mjs
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+│   ├── favicon.ico
+│   ├── images
+│   │   ├── logo-color.png
+│   │   └── logo-white.png
+│   ├── placeholder.jpg
+│   ├── placeholder-logo.png
+│   ├── placeholder-logo.svg
+│   ├── placeholder.svg
+│   └── placeholder-user.jpg
+├── styles
+│   └── globals.css
+├── tailwind.config.ts
+└── tsconfig.json
+
+25 directories, 120 files
