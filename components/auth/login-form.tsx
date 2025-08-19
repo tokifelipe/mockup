@@ -1,3 +1,6 @@
+// DEBE HACER FETCH A LA API INTERNA DEL SERVIDOR: BFF
+
+
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
