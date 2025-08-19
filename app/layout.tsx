@@ -1,3 +1,6 @@
+//Este archivo nos servirá para compartir diseños en todas las paginas de mi aplicacion
+
+
 import '@/app/ui/globals.css';
 import { inter } from '@/app/ui/fonts';
  
