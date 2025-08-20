@@ -1,32 +1,8 @@
-//La conexión a la API/DB se maneja en components/auth/login-form.tsx (función `authenticate`).
-"use client"
-
-import { Card, CardContent } from "@/components/ui/card"
-import { LoginForm } from "@/components/auth/login-form"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+// app/(auth)/login/page.tsx
+import { Card, CardContent } from "@/components/ui/card";
+import { LoginForm } from "@/components/auth/login-form";
 
 export default function LoginPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    try {
-      const authed =
-        localStorage.getItem("demo-auth") === "1" || sessionStorage.getItem("demo-auth") === "1"
-      if (authed) router.replace("/")
-    } catch {
-      // noop
-    }
-  }, [router])
-
-  // Habilita "no-shell" para ocultar Sidebar/Header/Chat en /login
-  useEffect(() => {
-    document.documentElement.classList.add("no-shell")
-    return () => {
-      document.documentElement.classList.remove("no-shell")
-    }
-  }, [])
-
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <Card className="w-full max-w-md border">
@@ -35,9 +11,15 @@ export default function LoginPage() {
             <h1 className="text-2xl font-bold text-gray-800">Bienvenido</h1>
             <p className="text-sm text-gray-500">Ingresa tus credenciales para continuar</p>
           </div>
+          {(((process.env.DEMO_LOGIN === 'true') || (process.env.DEMO_LOGIN === '1')) ||
+            (process.env.NODE_ENV !== 'production')) && (
+            <div className="mb-4 rounded-md border border-dashed p-3 text-xs text-gray-600">
+              Demo login habilitado. Use: demo@example.com / demo1234
+            </div>
+          )}
           <LoginForm />
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

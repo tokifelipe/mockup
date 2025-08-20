@@ -1,125 +1,63 @@
-// DEBE HACER FETCH A LA API INTERNA DEL SERVIDOR: BFF
+// components/auth/login-form.tsx
+"use client";
 
-
-"use client"
-
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react"
-
-const DEMO_USER = {
-  email: "admin@demo.com",
-  password: "Admin123!",
-}
-
-const AUTH_STORAGE_KEY = "demo-auth"
-
-// === SOURCE: conexión a API/DB ===
-// En producción, se debe mover esto a /lib/api/auth.ts y se debe usar variables de entorno.
-// Ej.: process.env.NEXT_PUBLIC_API_URL configurada en .env.local
-const API_URL = process.env.NEXT_PUBLIC_API_URL
-
-type AuthResponse = { ok: true; token?: string } | { ok: false; message: string }
-
-/**
- * Punto único de autenticación.
- * TODO: Reemplazar el bloque "Demo-only" por la llamada real a tu API.
- */
-async function authenticate(email: string, password: string): Promise<AuthResponse> {
-  // Ejemplo con REST (descomentar y ajustar):
-  /*
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-    credentials: "include",
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    return { ok: false, message: err?.message ?? "Error de autenticación" }
-  }
-  const data = await res.json()
-  return { ok: true, token: data?.token }
-  */
-
-  // Demo-only (fake):
-  await new Promise((r) => setTimeout(r, 600))
-  if (email.trim().toLowerCase() === DEMO_USER.email && password === DEMO_USER.password) {
-    return { ok: true, token: "demo-token" }
-  }
-  return { ok: false, message: "Credenciales inválidas. Revisa tu correo y contraseña." }
-}
-// === FIN SOURCE ===
+import { useCallback, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 export function LoginForm() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [remember, setRemember] = useState(true)
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const sp = useSearchParams();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    try {
-      if (typeof window !== "undefined" && localStorage.getItem(AUTH_STORAGE_KEY) === "1") {
-        router.replace("/")
-      }
-    } catch {
-      // noop
-    }
-  }, [router])
-
-  const emailIsValid = useMemo(() => /\S+@\S+\.\S+/.test(email), [email])
-  const canSubmit = useMemo(() => emailIsValid && password.length >= 6 && !loading, [emailIsValid, password, loading])
+  const emailIsValid = useMemo(() => /\S+@\S+\.\S+/.test(email), [email]);
+  const canSubmit = useMemo(
+    () => emailIsValid && password.length >= 6 && !loading,
+    [emailIsValid, password, loading]
+  );
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      setError(null)
-      if (!emailIsValid) {
-        setError("Ingresa un correo válido.")
-        return
-      }
-      if (password.length < 6) {
-        setError("La contraseña debe tener al menos 6 caracteres.")
-        return
-      }
+      e.preventDefault();
+      setError(null);
+      if (!emailIsValid) return setError("Ingresa un correo válido.");
+      if (password.length < 6) return setError("La contraseña debe tener al menos 6 caracteres.");
 
-      setLoading(true)
-      const result = await authenticate(email, password)
+      setLoading(true);
+      const r = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, remember }),
+      });
 
-      if (result.ok) {
-        try {
-          if (remember) {
-            localStorage.setItem(AUTH_STORAGE_KEY, "1")
-          } else {
-            sessionStorage.setItem(AUTH_STORAGE_KEY, "1")
-          }
-        } catch {
-          // noop
-        }
-        router.replace("/")
-        return
+      if (r.ok) {
+        const from = sp.get("from") || "/dashboard";
+        router.replace(from);
+        return;
       }
-
-      setError(("message" in result && result.message) || "Error de autenticación")
-      setLoading(false)
+      const err = await r.json().catch(() => ({}));
+      setError(err?.message ?? "Error de autenticación");
+      setLoading(false);
     },
-    [email, password, remember, emailIsValid, router]
-  )
+    [email, password, remember, emailIsValid, router, sp]
+  );
 
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-4">
-      {error ? (
+      {error && (
         <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2" role="alert">
           {error}
         </p>
-      ) : null}
+      )}
 
+      {/* Email */}
       <div className="space-y-1.5">
         <label htmlFor="email" className="text-sm font-medium text-gray-700">
           Correo electrónico
@@ -136,12 +74,11 @@ export function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             aria-invalid={!!error && !emailIsValid}
-            aria-describedby={error && !emailIsValid ? "email-error" : undefined}
-            required
           />
         </div>
       </div>
 
+      {/* Password */}
       <div className="space-y-1.5">
         <label htmlFor="password" className="text-sm font-medium text-gray-700">
           Contraseña
@@ -157,9 +94,8 @@ export function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             aria-invalid={!!error && password.length < 6}
-            aria-describedby={error && password.length < 6 ? "password-error" : undefined}
-            required
             minLength={6}
+            required
           />
           <button
             type="button"
@@ -172,6 +108,7 @@ export function LoginForm() {
         </div>
       </div>
 
+      {/* Remember + Submit */}
       <div className="flex items-center justify-between">
         <label className="inline-flex items-center gap-2 text-sm text-gray-600 select-none">
           <input
@@ -187,12 +124,7 @@ export function LoginForm() {
         </a>
       </div>
 
-      <Button
-        type="submit"
-        className="w-full bg-action hover:bg-action-hover"
-        disabled={!canSubmit}
-        aria-busy={loading}
-      >
+      <Button type="submit" className="w-full bg-action hover:bg-action-hover" disabled={!canSubmit} aria-busy={loading}>
         {loading ? (
           <span className="inline-flex items-center">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -202,10 +134,6 @@ export function LoginForm() {
           "Ingresar"
         )}
       </Button>
-
-      <p className="text-xs text-gray-500 text-center">
-        Demo: {DEMO_USER.email} / {DEMO_USER.password}
-      </p>
     </form>
-  )
+  );
 }
