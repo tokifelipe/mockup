@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  front_agen_builder:
+    container_name: front_agen_builder
+    image: front_agen_builder:dev
+    build:
+      context: .
+      dockerfile: dockerfile   # nombre exacto de tu Dockerfile (lo tienes en minúscula)
+    ports:
+      - "3000:3000"            # host:container
+    # environment:
+    #   - NODE_ENV=development
